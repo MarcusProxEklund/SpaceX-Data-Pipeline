@@ -1,4 +1,3 @@
-import requests
 import pandas as pd
 
 from logger.logger import logger
@@ -9,16 +8,11 @@ def get_spacex_data():
     try:
         logger.info("Fetching data from SpaceX API")
 
-        response = requests.get(url)
-        
-        if response.status_code != 200:
-            logger.error(f"Failed to fetch data from SpaceX API. Status code: {response.status_code}")
-            return None
+        df = pd.read_json(url)
         
         logger.info("Data fetched successfully")
 
-        data = response.json()
-        return data
+        return df
     
     except Exception as e:
         logger.error(f"An error occurred while fetching data from SpaceX API: {e}", exc_info=True)
